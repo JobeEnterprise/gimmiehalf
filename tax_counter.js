@@ -1,8 +1,8 @@
 // Define the rate of tax per second
 const taxRate = 0.00317057704 / 100; // Convert to dollars
 
-// Update the counters every second
-setInterval(function() {
+// Function to update tax counters
+function updateTaxCounters() {
     // Get current date and time
     const now = new Date();
 
@@ -10,8 +10,7 @@ setInterval(function() {
     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     // Define start of the week (assuming week starts on Monday)
-    const startOfWeek = new Date();
-    startOfWeek.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1));
+    const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1)));
     startOfWeek.setHours(0, 0, 0, 0);
 
     // Define start of the month
@@ -31,7 +30,9 @@ setInterval(function() {
     const weeklyTax = taxRate * elapsedSecondsWeekly;
     const monthlyTax = taxRate * elapsedSecondsMonthly;
     const yearlyTax = taxRate * elapsedSecondsYearly;
-    const totalTax = taxRate * ((now - startOfYear) / 1000);
+
+    // Total tax since the start of the counter (we assume the counter started at the same time as the year for simplicity)
+    const totalTax = taxRate * elapsedSecondsYearly;
 
     // Update the page
     document.getElementById('daily').innerText = `Daily Tax: $${dailyTax.toFixed(2)}`;
@@ -39,4 +40,10 @@ setInterval(function() {
     document.getElementById('monthly').innerText = `Monthly Tax: $${monthlyTax.toFixed(2)}`;
     document.getElementById('yearly').innerText = `Yearly Tax: $${yearlyTax.toFixed(2)}`;
     document.getElementById('total').innerText = `Total Tax: $${totalTax.toFixed(2)}`;
-}, 1000);
+}
+
+// Update the counters right away
+updateTaxCounters();
+
+// Then update the counters every second
+setInterval(updateTaxCounters, 1000);
