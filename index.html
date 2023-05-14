@@ -23,7 +23,8 @@ window.onload = function() {
         document.getElementById('counter').textContent = '$' + tax.toFixed(2);
     }
 
-    setInterval(updateCounter, 1000);
+    updateCounter(); // Call the function once immediately when the page loads
+    setInterval(updateCounter, 1000); // Then continue to call it every second
 };
 </script>
 </head>
