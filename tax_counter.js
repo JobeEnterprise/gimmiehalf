@@ -1,32 +1,42 @@
 // Define the rate of tax per second
-const taxRate = 0.00317057704;
+const taxRate = 0.00317057704 / 100; // Convert to dollars
 
-// Define the counters
-let dailyTax = 0;
-let weeklyTax = 0;
-let monthlyTax = 0;
-let yearlyTax = 0;
+// Initialize total tax
 let totalTax = 0;
-
-// Define the start date of the counters
-const startDate = new Date();
 
 // Update the counters every second
 setInterval(function() {
-    // Calculate the elapsed time in various units
+    // Get current date and time
     const now = new Date();
-    const elapsedSeconds = (now - startDate) / 1000;
-    const elapsedDays = elapsedSeconds / 86400;
-    const elapsedWeeks = elapsedSeconds / (86400 * 7);
-    const elapsedMonths = elapsedSeconds / (86400 * 30.44);  // Rough average
-    const elapsedYears = elapsedSeconds / (86400 * 365.25);  // Leap years included
 
-    // Update the counters
-    dailyTax = elapsedDays <= 1 ? taxRate * elapsedSeconds : 0;
-    weeklyTax = elapsedWeeks <= 1 ? taxRate * elapsedSeconds : 0;
-    monthlyTax = elapsedMonths <= 1 ? taxRate * elapsedSeconds : 0;
-    yearlyTax = elapsedYears <= 1 ? taxRate * elapsedSeconds : 0;
-    totalTax = taxRate * elapsedSeconds;
+    // Define start of the day
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    // Define start of the week (assuming week starts on Monday)
+    const startOfWeek = new Date();
+    startOfWeek.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1));
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    // Define start of the month
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    // Define start of the year
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
+
+    // Calculate elapsed seconds
+    const elapsedSecondsDaily = (now - startOfDay) / 1000;
+    const elapsedSecondsWeekly = (now - startOfWeek) / 1000;
+    const elapsedSecondsMonthly = (now - startOfMonth) / 1000;
+    const elapsedSecondsYearly = (now - startOfYear) / 1000;
+
+    // Calculate taxes
+    const dailyTax = taxRate * elapsedSecondsDaily;
+    const weeklyTax = taxRate * elapsedSecondsWeekly;
+    const monthlyTax = taxRate * elapsedSecondsMonthly;
+    const yearlyTax = taxRate * elapsedSecondsYearly;
+
+    // Calculate total tax
+    totalTax += taxRate;
 
     // Update the page
     document.getElementById('daily').innerText = `Daily Tax: $${dailyTax.toFixed(2)}`;
