@@ -1,9 +1,6 @@
 // Define the rate of tax per second
 const taxRate = 0.00317057704 / 100; // Convert to dollars
 
-// Initialize total tax
-let totalTax = 0;
-
 // Update the counters every second
 setInterval(function() {
     // Get current date and time
@@ -34,9 +31,7 @@ setInterval(function() {
     const weeklyTax = taxRate * elapsedSecondsWeekly;
     const monthlyTax = taxRate * elapsedSecondsMonthly;
     const yearlyTax = taxRate * elapsedSecondsYearly;
-
-    // Calculate total tax
-    totalTax += taxRate;
+    const totalTax = taxRate * ((now - startOfYear) / 1000);
 
     // Update the page
     document.getElementById('daily').innerText = `Daily Tax: $${dailyTax.toFixed(2)}`;
