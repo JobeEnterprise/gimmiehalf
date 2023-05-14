@@ -41,8 +41,7 @@ window.onload = function() {
     function updateCounter() {
         var seconds = secondsSinceStartOfYear();
         var tax = seconds * rate;
-        var taxFormatted = tax.toFixed(2).toLocaleString('en-US');
-        document.getElementById('counter').textContent = '$' + taxFormatted;
+        document.getElementById('counter').textContent = '$' + tax.toFixed(2);
     }
 
     updateCounter();
