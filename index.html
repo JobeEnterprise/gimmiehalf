@@ -2,6 +2,31 @@
 <html>
 <head>
 <title>Tax Counter</title>
+<style>
+body {
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+#counter {
+    font-size: 2em;
+    color: #007BFF;
+    margin-top: 20px;
+}
+</style>
 <script>
 window.onload = function() {
     const rate = 0.00317057704;
@@ -23,13 +48,15 @@ window.onload = function() {
         document.getElementById('counter').textContent = '$' + tax.toFixed(2);
     }
 
-    updateCounter(); // Call the function once immediately when the page loads
-    setInterval(updateCounter, 1000); // Then continue to call it every second
+    updateCounter();
+    setInterval(updateCounter, 1000);
 };
 </script>
 </head>
 <body>
-    <h1>Tax Counter</h1>
-    <p id="counter"></p>
+    <div class="container">
+        <h1>Tax Counter</h1>
+        <p id="counter"></p>
+    </div>
 </body>
 </html>
