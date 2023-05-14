@@ -1,5 +1,5 @@
 // Define the rate of tax per second
-const taxRate = 0.00317057704
+const taxRate = 0.317057704
 // Function to update tax counters
 function updateTaxCounters() {
     // Get current date and time
